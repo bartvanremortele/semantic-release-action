@@ -1,31 +1,18 @@
-name: Validate & Release
+name: Release
 
-on: push
+on:
+  push:
+    branches:
+      - master
 
 jobs:
-  validate:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@master
-
-      - uses: actions/setup-node@v1
-        with:
-          node-version: 12.x
-
-      - run: npm ci
-      - run: npm run lint
-
   release:
-    needs: validate
-
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@master
+      - uses: actions/checkout@v1
 
       - name: semantic-release
-        if: github.ref == 'refs/heads/master'
         id: semantic
         uses: ./
         env:
